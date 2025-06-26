@@ -21,7 +21,15 @@ body.surat-bg {
   background-position: center top;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  
+  font-family: Georgia, serif;
+  color: white;
+  text-align: center;
+  padding: 40px;
+  position: relative;
+  overflow-x: hidden;
 }
+
 
 /* Blur Background via Overlay */
 body::before {
