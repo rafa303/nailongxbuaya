@@ -36,6 +36,13 @@ function bukaSurat() {
 
       // (Opsional) tampilkan gambar terkait kata (jika triggerKata diisi)
       tampilkanGambarKunci(isi);
+      const vn = document.getElementById("voiceNote");
+      if (vn) {
+        vn.style.display = "block";
+        vn.style.margin = "0 auto";
+        vn.style.display = "flex";
+        vn.style.justifyContent = "center";
+      }
     });
 }
 
