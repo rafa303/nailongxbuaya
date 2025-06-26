@@ -95,3 +95,16 @@ function jalankanConfetti() {
     if (Date.now() < end) requestAnimationFrame(frame);
   })();
 }
+
+// Kurangi musik saat voice note diputar
+const vnPlayer = document.getElementById("voiceNote");
+if (vnPlayer) {
+  vnPlayer.addEventListener("play", () => {
+    const musik = document.getElementById("musikLatar");
+    musik.volume = 0.3;
+  });
+  vnPlayer.addEventListener("pause", () => {
+    const musik = document.getElementById("musikLatar");
+    musik.volume = 1;
+  });
+}
