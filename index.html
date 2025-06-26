@@ -118,10 +118,12 @@
   container.style.transition = "opacity 1s";
   container.style.opacity = "0";
   setTimeout(() => {
-    container.style.display = "none";
-    alert("only for u");
-    document.getElementById("formContainer").classList.remove("hidden");
-  }, 1000);
+  container.style.display = "none";
+  alert("only for u");
+  // document.body.classList.add("surat-bg"); ← HAPUS INI
+  document.getElementById("formContainer").classList.remove("hidden");
+}, 1000);
+
 });
 
   function buka() {
