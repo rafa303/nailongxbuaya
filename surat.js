@@ -2,7 +2,7 @@ const triggerKata = {
   
 };
 
-function buka() {
+function bukaSurat() {
   fetch("data.json")
     .then(response => response.json())
     .then(data => {
