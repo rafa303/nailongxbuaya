@@ -15,7 +15,6 @@ function bukaSurat() {
 
       document.getElementById("formContainer").classList.add("hidden");
       document.getElementById("suratContainer").classList.remove("hidden");
-      document.body.classList.add("surat-bg");
 
       const musik = document.getElementById("musikLatar");
       musik.currentTime = 0;
