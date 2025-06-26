@@ -17,6 +17,10 @@
       justify-content: center;
       z-index: 9999;
     }
+    <!-- Di bawah tag <video> -->
+    <button id="unlockButton" style="position: absolute; bottom: 10vh; background-color: white; color: black; font-weight: bold; padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; z-index: 10000;">
+      This is a secret okay?
+    </button>
 
     video#reelVideo {
       width: auto;
@@ -86,19 +90,17 @@
 <script src="surat.js"></script>
 
 <script>
-  const video = document.getElementById("reelVideo");
-  const container = document.getElementById("videoContainer");
+const video = document.getElementById("reelVideo");
+const container = document.getElementById("videoContainer");
+const unlockBtn = document.getElementById("unlockButton");
 
-  video.addEventListener("ended", () => {
-    container.style.transition = "opacity 1s";
-    container.style.opacity = "0";
-    setTimeout(() => {
-      container.style.display = "none";
-      alert("only for u");
-      document.body.classList.add("surat-bg");
-      document.getElementById("formContainer").classList.remove("hidden");
-    }, 1000);
-  });
+unlockBtn.addEventListener("click", () => {
+  // Trigger audio permission
+  const musik = document.getElementById("musikLatar");
+  musik.volume = 1;
+  musik.play().catch(() => {});
+  unlockBtn.style.display = "none";
+});
 
   function buka() {
     bukaSurat(); // Fungsi dari surat.js
