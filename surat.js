@@ -75,68 +75,6 @@ function tampilkanGambarKunci(isi) {
   });
 }
 
-function kembali() {
-  document.getElementById("suratContainer").classList.add("hidden");
-  document.getElementById("formContainer").classList.remove("hidden");
-
-  // Hentikan musik
-  const musik = document.getElementById("musikLatar");
-  musik.pause();
-  musik.currentTime = 0;
-
-  // Sembunyikan voice note
-  const vn = document.getElementById("voiceNote");
-  if (vn) vn.style.display = "none";
-}
-
-function cetakSebagaiGambar() {
-  const surat = document.querySelector('.surat');
-  const tombolSementara = document.querySelectorAll('.non-printable');
-  tombolSementara.forEach(el => el.style.display = "none");
-
-  const originalStyles = {
-    background: surat.style.background,
-    color: surat.style.color
-  };
-
-  const allChildren = surat.querySelectorAll("*");
-  const originalTextColors = [];
-
-  allChildren.forEach(el => {
-    originalTextColors.push(el.style.color);
-    el.style.color = "#000";
-    el.style.background = "transparent";
-  });
-
-  const dekoratif = surat.querySelectorAll('.gambar-konten');
-  dekoratif.forEach(img => {
-    img.style.display = "none";
-  });
-
-  surat.style.background = "#ffffff";
-  surat.style.color = "#000000";
-
-  html2canvas(surat, { scale: 2 }).then(canvas => {
-    const link = document.createElement('a');
-    link.download = 'surat-kelulusan.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-
-    surat.style.background = originalStyles.background;
-    surat.style.color = originalStyles.color;
-    tombolSementara.forEach(el => el.style.display = "");
-
-    allChildren.forEach((el, i) => {
-      el.style.color = originalTextColors[i];
-      el.style.background = "";
-    });
-
-    dekoratif.forEach(img => {
-      img.style.display = "";
-    });
-  });
-}
-
 function jalankanConfetti() {
   const duration = 2000;
   const end = Date.now() + duration;
