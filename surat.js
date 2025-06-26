@@ -3,22 +3,19 @@ const triggerKata = {
 };
 
 function buka() {
-  const input = document.getElementById("nameInput").value.trim().toLowerCase();
-
   fetch("data.json")
     .then(response => response.json())
     .then(data => {
-      const namaDitemukan = Object.keys(data).find(n => n.toLowerCase() === input);
-      if (!namaDitemukan) return alert("Nama tidak ditemukan.");
-
+      const namaDitemukan = "Crush"; // <-- Ganti dengan nama kunci di data.json
       const { isi, penutup } = data[namaDitemukan];
+
       document.getElementById("nama").innerText = namaDitemukan;
       document.getElementById("isiSurat").innerText = isi;
       document.getElementById("penutupCustom").innerText = penutup;
 
       document.getElementById("formContainer").classList.add("hidden");
       document.getElementById("suratContainer").classList.remove("hidden");
-      alert("⚠️ Bahaya! Mengandung Bawang!");
+      document.body.classList.add("surat-bg");
 
       const musik = document.getElementById("musikLatar");
       musik.currentTime = 0;
@@ -30,45 +27,11 @@ function buka() {
         jalankanConfetti();
       }, 500);
 
-      // Hapus gambar sebelumnya
-      document.querySelectorAll('.gambar-konten').forEach(el => el.remove());
-
-      // Tampilkan gambar dinamis sesuai kata kunci
-      const dimunculkan = new Set();
-      let gambarIndex = 0;
-
-      Object.keys(triggerKata).forEach(kunci => {
-        if (isi.includes(kunci) && !dimunculkan.has(kunci)) {
-          const img = document.createElement("img");
-          img.src = triggerKata[kunci];
-          img.classList.add("gambar-konten");
-
-          const surat = document.querySelector('.surat');
-          const arah = Math.random() > 0.5 ? "left" : "right";
-          const jarakPinggir = -80;
-          const topPos = 100 + gambarIndex * 120;
-
-          if (arah === "left") {
-            img.style.left = `${jarakPinggir}px`;
-          } else {
-            img.style.right = `${jarakPinggir}px`;
-          }
-          img.style.top = `${topPos}px`;
-
-          const derajat = Math.floor(Math.random() * 31) - 15;
-          img.style.transform = `rotate(${derajat}deg)`;
-
-          img.onclick = () => {
-            img.classList.toggle("zoomed");
-          };
-
-          surat.appendChild(img);
-          dimunculkan.add(kunci);
-          gambarIndex++;
-        }
-      });
+      const vn = document.getElementById("voiceNote");
+      if (vn) vn.style.display = "block";
     });
 }
+
 
 function kembali() {
   document.getElementById("suratContainer").classList.add("hidden");
