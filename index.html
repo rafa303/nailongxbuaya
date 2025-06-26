@@ -65,10 +65,10 @@
 
 <!-- Video Reels -->
 <div id="videoContainer">
-  <video id="reelVideo" autoplay muted playsinline>
-    <source src="reel.mp4" type="video/mp4" />
-    Browser kamu tidak mendukung video.
-  </video>
+  <video id="reelVideo" playsinline>
+  <source src="reel.mp4" type="video/mp4" />
+  Browser kamu tidak mendukung video.
+</video>
   <button id="unlockButton">This is a secret okay?</button>
 </div>
 
@@ -103,24 +103,28 @@
   const video = document.getElementById("reelVideo");
   const container = document.getElementById("videoContainer");
   const unlockBtn = document.getElementById("unlockButton");
-
+  
   unlockBtn.addEventListener("click", () => {
-    const musik = document.getElementById("musikLatar");
-    musik.volume = 1;
-    musik.play().catch(() => {});
+    // Aktifkan audio & mulai video reel
+    video.muted = false;
+    video.currentTime = 0;
+    video.play().catch((e) => {
+      console.warn("Gagal autoplay:", e);
+    });
     unlockBtn.style.display = "none";
   });
 
+
   video.addEventListener("ended", () => {
-    container.style.transition = "opacity 1s";
-    container.style.opacity = "0";
-    setTimeout(() => {
-      container.style.display = "none";
-      alert("only for u");
-      document.body.classList.add("surat-bg");
-      document.getElementById("formContainer").classList.remove("hidden");
-    }, 1000);
-  });
+  container.style.transition = "opacity 1s";
+  container.style.opacity = "0";
+  setTimeout(() => {
+    container.style.display = "none";
+    alert("only for u");
+    document.body.classList.add("surat-bg");
+    document.getElementById("formContainer").classList.remove("hidden");
+  }, 1000);
+});
 
   function buka() {
     bukaSurat();
