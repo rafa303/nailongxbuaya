@@ -4,7 +4,7 @@
 
 body {
   font-family: Georgia, serif;
-  background-image: url('bg-surat-desktop.png');
+  background-image: url('bg-surat-desktop.jpg');
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -27,7 +27,7 @@ body::before {
 
 @media (max-width: 600px) {
   body {
-    background-image: url('bg-surat-mobile.png');
+    background-image: url('bg-surat-mobile.jpg');
     background-size: cover;
     background-position: center;
   }
