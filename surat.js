@@ -6,7 +6,7 @@ function bukaSurat() {
   fetch("data.json")
     .then(response => response.json())
     .then(data => {
-      const namaDitemukan = "Crush";
+      const namaDitemukan = "Mu";
       const { isi, penutup } = data[namaDitemukan];
 
       document.getElementById("nama").innerText = namaDitemukan;
