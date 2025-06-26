@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Surat Kelulusan</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="surat.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="formContainer" class="container">
+  <h1>Surat Kelulusan</h1>
+  <p class="deskripsi-halaman">Surat spesial kelulusan ini ditulis khusus untukmu, semoga berkenan. - Rafa Putra Ro'uf</p>
+  <input type="text" id="nameInput" placeholder="Masukkan Nama" />
+  <button onclick="buka()">Buka Surat</button>
+</div>
+
+<div id="suratContainer" class="surat hidden fade-in">
+  <img src="pita.png" class="ornamen-atas" />
+  <h2 class="judul-surat">Untuk <span id="nama"></span>,</h2>
+  <p id="isiSurat" class="isi-surat"></p>
+  <p id="penutupCustom" class="penutup"></p>
+  <img src="stempel.png" class="ornamen-bawah" />
+  <button class="non-printable" onclick="cetakSebagaiGambar()">📸 Simpan Sebagai Gambar</button>
+  <button class="non-printable" onclick="kembali()">Kembali</button>
+</div>
+
+<audio id="musikLatar" src="lulus.mp3" preload="auto" loop></audio>
+<audio id="suaraConfetti" src="confetti.mp3" preload="auto"></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="surat.js"></script>
+
+</body>
+</html>
