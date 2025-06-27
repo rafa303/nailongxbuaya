@@ -31,3 +31,14 @@ video.addEventListener('ended', () => {
     }
   }, 1000);
 });
+
+// Tampilkan loading screen selama 3 detik, lalu mulai reel
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    loadingScreen.style.opacity = "0";
+    setTimeout(() => {
+      loadingScreen.style.display = "none";
+      video.play().catch(() => {});
+    }, 800);
+  }, 3000);
+});
