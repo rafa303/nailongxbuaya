@@ -2,132 +2,38 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>nothingspecials</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>Untukmu...</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
-  <style>
-    #videoContainer {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      flex-direction: column;
-    }
-
-    #unlockButton {
-      margin-top: 20px;
-      background-color: white;
-      color: black;
-      font-weight: bold;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      z-index: 10000;
-    }
-
-    video#reelVideo {
-      width: auto;
-      height: 90vh;
-      aspect-ratio: 9/16;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-    }
-
-    #voiceNote {
-      display: none;
-      margin: 20px auto;
-      justify-content: center;
-    }
-
-    .italic-ending {
-      font-style: italic;
-      text-align: center;
-      margin-top: 20px;
-      color: #555;
-    }
-
-    body.surat-bg {
-      background-image: url('bg-surat.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-    }
-  </style>
 </head>
 <body>
 
-<!-- Video Reels -->
+<!-- Reel Video -->
 <div id="videoContainer">
-  <video id="reelVideo" playsinline>
-  <source src="reel.mp4" type="video/mp4" />
-  Browser kamu tidak mendukung video.
-</video>
-  <button id="unlockButton">Ini rahasia okee??</button>
+  <video id="reelVideo" playsinline muted>
+    <source src="reel.mp4" type="video/mp4" />
+    Maaf, browser kamu tidak mendukung video.
+  </video>
 </div>
 
-<!-- Tombol Buka Surat -->
-<div id="formContainer" class="container hidden">
-  <h1>Letter 'nothingspecial'.</h1>
-  <p class="deskripsi-halaman">for u, literally just for u. dont read it outloud, just, keep it for u and me.</p>
-  <button onclick="buka()">Buka Surat</button>
+<!-- Notice untuk HP -->
+<div id="rotateNotice" class="hidden">
+  <p>📱 Putar balik HP anda untuk pengalaman terbaik</p>
 </div>
 
-<!-- Surat -->
-<div id="suratContainer" class="surat hidden fade-in">
-  <img src="pita.png" class="ornamen-atas" />
-  <h2 class="judul-surat">Untuk <span id="nama"></span>,</h2>
-  <p id="isiSurat" class="isi-surat"></p>
-  <p id="penutupCustom" class="penutup"></p>
-  <audio id="voiceNote" controls src="voice-note.mp3"></audio>
-  <img src="stempel.png" class="ornamen-bawah" />
-  <button class="non-printable" onclick="kembali()">Kembali</button>
+<!-- PPT Viewer -->
+<div id="pptContainer" class="hidden">
+  <img id="pptSlide" src="slide1.png" alt="Slide PPT" />
+  <div id="controls">
+    <button onclick="prevSlide()">⟨</button>
+    <button onclick="nextSlide()">⟩</button>
+  </div>
+  <audio id="voiceAudio" controls autoplay>
+    <source src="voice-note.mp3" type="audio/mp3" />
+    Maaf, browser kamu tidak mendukung audio.
+  </audio>
 </div>
 
-<!-- Audio & Script -->
-<audio id="musikLatar" src="lulus.mp3" preload="auto" loop></audio>
-<audio id="suaraConfetti" src="confetti.mp3" preload="auto"></audio>
-
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<script src="surat.js"></script>
-
-<script>
-  const video = document.getElementById("reelVideo");
-  const container = document.getElementById("videoContainer");
-  const unlockBtn = document.getElementById("unlockButton");
-  
-  unlockBtn.addEventListener("click", () => {
-    // Aktifkan audio & mulai video reel
-    video.muted = false;
-    video.currentTime = 0;
-    video.play().catch((e) => {
-      console.warn("Gagal autoplay:", e);
-    });
-    unlockBtn.style.display = "none";
-  });
-
-
-  video.addEventListener("ended", () => {
-  container.style.transition = "opacity 1s";
-  container.style.opacity = "0";
-  setTimeout(() => {
-  container.style.display = "none";
-  alert("only for u");
-  // document.body.classList.add("surat-bg"); ← HAPUS INI
-  document.getElementById("formContainer").classList.remove("hidden");
-}, 1000);
-
-});
-
-  function buka() {
-    bukaSurat();
-  }
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
