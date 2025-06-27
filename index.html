@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Untukmu...</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -12,28 +12,43 @@
 <div id="videoContainer">
   <video id="reelVideo" playsinline muted>
     <source src="reel.mp4" type="video/mp4" />
-    Maaf, browser kamu tidak mendukung video.
+    Browser tidak mendukung video ini.
   </video>
 </div>
 
-<!-- Notice untuk HP -->
+<!-- Rotate Notice (opsional) -->
 <div id="rotateNotice" class="hidden">
   <p>📱 Putar balik HP anda untuk pengalaman terbaik</p>
 </div>
 
-<!-- PPT Viewer -->
+<!-- Google Slides Embedded -->
 <div id="pptContainer" class="hidden">
-  <img id="pptSlide" src="slide1.png" alt="Slide PPT" />
-  <div id="controls">
-    <button onclick="prevSlide()">⟨</button>
-    <button onclick="nextSlide()">⟩</button>
-  </div>
-  <audio id="voiceAudio" controls autoplay>
-    <source src="voice-note.mp3" type="audio/mp3" />
-    Maaf, browser kamu tidak mendukung audio.
-  </audio>
+  <iframe id="pptFrame" src="https://docs.google.com/presentation/d/e/2PACX-1vR0xyz/embed?start=false&loop=false&delayms=3000"
+    frameborder="0" width="100%" height="100%" allowfullscreen></iframe>
 </div>
 
-<script src="script.js"></script>
+<script>
+const video = document.getElementById('reelVideo');
+const videoContainer = document.getElementById('videoContainer');
+const pptContainer = document.getElementById('pptContainer');
+const rotateNotice = document.getElementById('rotateNotice');
+
+video.muted = false;
+video.play().catch(() => {});
+
+video.addEventListener('ended', () => {
+  videoContainer.style.display = 'none';
+
+  if (window.innerWidth < 600 && window.innerHeight > window.innerWidth) {
+    rotateNotice.classList.remove('hidden');
+    setTimeout(() => {
+      rotateNotice.classList.add('hidden');
+      pptContainer.classList.remove('hidden');
+    }, 3000);
+  } else {
+    pptContainer.classList.remove('hidden');
+  }
+});
+</script>
 </body>
 </html>
