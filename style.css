@@ -1,262 +1,68 @@
-
-/* ------------------ FONT ------------------ */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
-
-/* ------------------ BACKGROUND UTAMA ------------------ */
 body {
-  font-family: Georgia, serif;
-  background-image: url('bg-surat-desktop.jpg');
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  margin: 0;
+  background-color: black;
+  font-family: sans-serif;
   color: white;
   text-align: center;
-  padding: 40px;
-  position: relative;
-  overflow-x: hidden;
-  transition: background-image 0.5s ease-in-out;
+  overflow: hidden;
 }
 
-/* Blur Background via Overlay */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  backdrop-filter: blur(3px);
-  z-index: -1;
-}
-
-/* ------------------ BACKGROUND UNTUK MOBILE ------------------ */
-@media (max-width: 600px) {
-  body {
-    background-image: url('bg-surat-mobile.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-  }
-}
-/* ------------------ FIX BACKGROUND AGAR TETAP TAMPIL ------------------ */
 #videoContainer {
   position: fixed;
   top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* semi-transparan agar bg tetap tampak */
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-#reelVideo {
-  opacity: 0.95;
-  z-index: 10000;
-}
-
-/* ------------------ TIPOGRAFI ------------------ */
-h1, h2, h3 {
-  font-family: 'Cinzel', serif;
-  color: white;
-}
-
-body, button, input {
-  font-family: 'Georgia', serif;
-  color: white;
-}
-
-/* ------------------ FORM ------------------ */
-.container {
-  max-width: 600px;
-  margin: auto;
-}
-
-input {
-  padding: 10px;
-  width: 80%;
-  font-size: 16px;
-  margin-bottom: 20px;
+  width: 100vw; height: 100vh;
   background-color: black;
-  color: white;
-  border: 2px solid #d4a373;
-  transition: box-shadow 0.3s;
-}
-
-input::placeholder {
-  color: #ccc;
-  font-style: italic;
-}
-
-input:focus {
-  box-shadow: 0 0 8px #d4a373;
-}
-
-/* ------------------ TOMBOL ------------------ */
-button {
-  padding: 10px 20px;
-  background-color: #805d3a;
-  color: white;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.deskripsi-halaman {
-  font-size: 16px;
-  color: #ddd;
-  font-style: italic;
-  margin-top: -10px;
-  margin-bottom: 30px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-button:hover {
-  background-color: #a0744e;
-  transform: scale(1.05);
-}
-
-/* ------------------ SURAT ------------------ */
-.surat {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 40px;
-  border: 12px solid #bfa76f;
-  border-radius: 20px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-  max-width: 720px;
-  margin: 40px auto;
-  position: relative;
-  font-family: Georgia, serif;
-  text-align: left;
-  color: #333;
-}
-
-.judul-surat {
-  font-family: 'Cinzel', serif;
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #333;
-}
-
-.inline-img {
-  width: 40px;
-  height: 40px;
-  margin-left: 6px;
-  vertical-align: middle;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease;
-}
-
-.isi-surat {
-  font-size: 18px;
-  line-height: 1.8;
-  text-align: justify;
-  text-indent: 25px;
-}
-
-
-.penutup {
-  font-style: italic;
-  text-align: center;
-  margin-top: 30px;
-  color: #555;
-  font-size: 16px;
-}
-
-/* ------------------ GAMBAR KONTEN ------------------ */
-
-.gambar-konten {
-  position: absolute;
-  width: 90px;
-  height: 90px;
-  border: 3px solid #fff;
-  border-radius: 10px;
-  background-color: #fdfdfd;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 10;
-  opacity: 0.9;
-  transition: all 0.4s ease;
-  cursor: zoom-in;
-  object-fit: cover;
 }
 
-/* Zoom ketika diklik */
-.gambar-konten.zoomed {
-  transform: scale(3) rotate(0deg);
-  z-index: 9999;
-  cursor: zoom-out;
+video {
+  max-height: 90vh;
+  max-width: 100%;
+  border-radius: 10px;
 }
 
-/* Efek glow saat hover */
-.gambar-konten:hover {
-  box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.6);
-}
-
-/* Posisi default, ditimpa oleh JS */
-.pos-left {
-  left: -70px;
-}
-
-.pos-right {
-  right: -70px;
-}
-
-.pos-top-left {
-  top: -25px;
-  left: -25px;
-}
-
-.pos-bottom-right {
-  bottom: -25px;
-  right: -25px;
-}
-
-/* Responsif: Sembunyikan di HP kecil */
-@media (max-width: 600px) {
-  .gambar-konten {
-    display: none;
-  }
-}
-
-
-/* ------------------ ORNAMEN ------------------ */
-.ornamen-atas {
-  width: 120px;
-  position: absolute;
-  top: -20px;
+#rotateNotice {
+  position: fixed;
+  top: 40%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  z-index: 9;
+  background: black;
+  padding: 20px;
+  border-radius: 10px;
 }
 
-.ornamen-bawah {
-  width: 70px;
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
+#pptContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
 }
 
-/* ------------------ ANIMASI ------------------ */
+#pptSlide {
+  width: 90%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 10px;
+  background: black;
+}
+
+#controls button {
+  padding: 10px 20px;
+  font-size: 24px;
+  margin: 10px;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 .hidden {
   display: none;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in {
-  animation: fadeIn 0.8s ease-out, shadowIn 1s ease-in-out;
-}
-
-@keyframes shadowIn {
-  0% { box-shadow: 0 0 0 rgba(0,0,0,0); }
-  100% { box-shadow: 0 0 25px rgba(0,0,0,0.15); }
 }
