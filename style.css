@@ -7,82 +7,7 @@ body {
   overflow: hidden;
 }
 
-/* VIDEO */
-#videoContainer {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: opacity 1s ease;
-}
-
-video {
-  max-height: 90vh;
-  max-width: 100%;
-  border-radius: 10px;
-}
-
-/* ROTATE NOTICE */
-#rotateNotice {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 20px;
-  background: black;
-  padding: 20px;
-  border-radius: 10px;
-  z-index: 9;
-}
-
-/* PPT CONTAINER */
-#pptContainer {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  padding: 0;
-  margin: 0;
-}
-
-#pptContainer iframe {
-  width: 95%;
-  height: 80vh;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-}
-
-#pptContainer audio {
-  margin-top: 10px;
-  width: 300px;
-}
-
-/* ANIMASI FADE */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.98); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-.fade-in {
-  animation: fadeIn 1s ease-out;
-}
-
-.hidden {
-  display: none;
-}
-
+/* Loading Screen */
 #loadingScreen {
   position: fixed;
   top: 0; left: 0;
@@ -133,4 +58,78 @@ video {
 @keyframes blink {
   0% { opacity: 0.4; }
   100% { opacity: 1; }
+}
+
+/* Video */
+#videoContainer {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity 1s ease;
+}
+
+video {
+  max-height: 90vh;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Rotate Notice */
+#rotateNotice {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  background: black;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 9;
+}
+
+/* PPT */
+#pptContainer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+#pptContainer iframe {
+  width: 95%;
+  height: 80vh;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+#pptContainer audio {
+  margin-top: 10px;
+  width: 300px;
+}
+
+/* Animasi */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-out;
+}
+
+.hidden {
+  display: none;
 }
