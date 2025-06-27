@@ -1,20 +1,21 @@
 body {
   margin: 0;
+  padding: 0;
   background-color: black;
-  font-family: sans-serif;
   color: white;
-  text-align: center;
+  font-family: sans-serif;
   overflow: hidden;
 }
 
 #videoContainer {
   position: fixed;
   top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  width: 100vw;
+  height: 100vh;
   background-color: black;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 10;
 }
 
@@ -30,37 +31,18 @@ video {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 20px;
-  z-index: 9;
   background: black;
   padding: 20px;
   border-radius: 10px;
+  z-index: 9;
 }
 
 #pptContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  padding: 20px;
-}
-
-#pptSlide {
-  width: 90%;
-  max-height: 80vh;
-  object-fit: contain;
-  border-radius: 10px;
-  background: black;
-}
-
-#controls button {
-  padding: 10px 20px;
-  font-size: 24px;
-  margin: 10px;
-  background: white;
-  color: black;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
 }
 
 .hidden {
