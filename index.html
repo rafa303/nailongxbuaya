@@ -5,6 +5,127 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
   <title>Untukmu...</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: white;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    #loadingScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+      transition: opacity 0.8s ease;
+    }
+
+    .loading-box {
+      text-align: center;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top: 4px solid white;
+      border-radius: 50%;
+      margin: 0 auto 16px auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 24px;
+      font-family: 'Cinzel', serif;
+      animation: blink 1s infinite alternate;
+    }
+
+    .loading-desc {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #ccc;
+      font-style: italic;
+    }
+
+    @keyframes blink {
+      0% { opacity: 0.4; }
+      100% { opacity: 1; }
+    }
+
+    #videoContainer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: opacity 1s ease;
+    }
+
+    video {
+      max-height: 90vh;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    #rotateNotice {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      background: black;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 900;
+    }
+
+    #pptContainer {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 800;
+    }
+
+    #pptContainer iframe {
+      width: 90%;
+      height: 90vh;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+  </style>
 </head>
 <body>
 
@@ -30,14 +151,66 @@
   <p>📱 Putar balik HP anda untuk pengalaman terbaik</p>
 </div>
 
-<!-- Google Slides + Musik -->
+<!-- PPT Container -->
 <div id="pptContainer" class="hidden fade-in">
-  <iframe id="pptFrame" 
-    src="<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQNxzPqggz_NA0uY5WGvamCOf_Oij0rOd3m1kkGneN2S0hLl-805Q0soaSepMpkjw/pubembed?start=false&loop=false&delayms=3000" frameborder="0" width="1280" height="749" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>" 
-    allowfullscreen></iframe>
-  <audio id="musikLatar" src="musik.mp3" autoplay loop></audio>
+  <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQNxzPqggz_NA0uY5WGvamCOf_Oij0rOd3m1kkGneN2S0hLl-805Q0soaSepMpkjw/pubembed?start=false&loop=false&delayms=3000" allowfullscreen></iframe>
 </div>
 
-<script src="script.js"></script>
+<!-- Musik Latar -->
+<audio id="musikLatar" src="musik.mp3" loop></audio>
+
+<!-- Script -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.getElementById('reelVideo');
+  const videoContainer = document.getElementById('videoContainer');
+  const pptContainer = document.getElementById('pptContainer');
+  const rotateNotice = document.getElementById('rotateNotice');
+  const musik = document.getElementById('musikLatar');
+  const loadingScreen = document.getElementById('loadingScreen');
+
+  video.pause();
+  video.style.display = "none";
+
+  video.addEventListener("canplay", () => {
+    setTimeout(() => {
+      loadingScreen.style.opacity = "0";
+      setTimeout(() => {
+        loadingScreen.style.display = "none";
+        video.style.display = "block";
+        video.muted = false;
+        video.play().catch(err => console.log("Gagal play:", err));
+      }, 800);
+    }, 1000);
+  });
+
+  video.addEventListener('ended', () => {
+    videoContainer.style.opacity = "0";
+
+    setTimeout(() => {
+      videoContainer.style.display = "none";
+
+      if (window.innerWidth < 600 && window.innerHeight > window.innerWidth) {
+        rotateNotice.classList.remove("hidden");
+
+        const checkRotate = () => {
+          if (window.innerWidth > window.innerHeight) {
+            rotateNotice.classList.add("hidden");
+            pptContainer.classList.remove("hidden");
+            musik.play().catch(() => {});
+            window.removeEventListener("resize", checkRotate);
+          }
+        };
+
+        window.addEventListener("resize", checkRotate);
+      } else {
+        pptContainer.classList.remove("hidden");
+        musik.play().catch(() => {});
+      }
+    }, 1000);
+  });
+});
+</script>
+
 </body>
 </html>
