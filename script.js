@@ -27,16 +27,25 @@ document.addEventListener("DOMContentLoaded", () => {
   // Setelah video selesai
   video.addEventListener('ended', () => {
     videoContainer.style.opacity = "0";
+
     setTimeout(() => {
       videoContainer.style.display = "none";
 
+      // Jika di HP potrait → tampilkan notice
       if (window.innerWidth < 600 && window.innerHeight > window.innerWidth) {
         rotateNotice.classList.remove("hidden");
-        setTimeout(() => {
-          rotateNotice.classList.add("hidden");
-          pptContainer.classList.remove("hidden");
-          if (musik) musik.play().catch(() => {});
-        }, 3000);
+
+        // Tunggu sampai user benar-benar memutar HP ke landscape
+        const checkRotate = () => {
+          if (window.innerWidth > window.innerHeight) {
+            rotateNotice.classList.add("hidden");
+            pptContainer.classList.remove("hidden");
+            if (musik) musik.play().catch(() => {});
+            window.removeEventListener("resize", checkRotate);
+          }
+        };
+
+        window.addEventListener("resize", checkRotate);
       } else {
         pptContainer.classList.remove("hidden");
         if (musik) musik.play().catch(() => {});
