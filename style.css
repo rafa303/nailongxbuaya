@@ -6,6 +6,30 @@ body {
   font-family: sans-serif;
   overflow: hidden;
 }
+#loadingScreen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.8s ease;
+}
+
+.loading-text {
+  color: white;
+  font-size: 24px;
+  font-family: 'Cinzel', serif;
+  animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
 
 /* VIDEO */
 #videoContainer {
