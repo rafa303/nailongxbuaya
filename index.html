@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
   <title>Untukmu...</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -16,39 +16,20 @@
   </video>
 </div>
 
-<!-- Rotate Notice (opsional) -->
+<!-- Notice untuk HP -->
 <div id="rotateNotice" class="hidden">
   <p>📱 Putar balik HP anda untuk pengalaman terbaik</p>
 </div>
 
-<!-- Google Slides Embedded -->
-<div id="pptContainer" class="hidden">
-  <iframe id="pptFrame" src="https://docs.google.com/presentation/d/e/2PACX-1vR0xyz/embed?start=false&loop=false&delayms=3000"
-    frameborder="0" width="100%" height="100%" allowfullscreen></iframe>
+<!-- Google Slides + Musik -->
+<div id="pptContainer" class="hidden fade-in">
+  <iframe id="pptFrame" 
+    src="https://docs.google.com/presentation/d/e/2PACX-1vR0xyz/embed?start=true&loop=false&delayms=3000" 
+    allowfullscreen></iframe>
+
+  <audio id="musikLatar" src="musik.mp3" autoplay loop></audio>
 </div>
 
-<script>
-const video = document.getElementById('reelVideo');
-const videoContainer = document.getElementById('videoContainer');
-const pptContainer = document.getElementById('pptContainer');
-const rotateNotice = document.getElementById('rotateNotice');
-
-video.muted = false;
-video.play().catch(() => {});
-
-video.addEventListener('ended', () => {
-  videoContainer.style.display = 'none';
-
-  if (window.innerWidth < 600 && window.innerHeight > window.innerWidth) {
-    rotateNotice.classList.remove('hidden');
-    setTimeout(() => {
-      rotateNotice.classList.add('hidden');
-      pptContainer.classList.remove('hidden');
-    }, 3000);
-  } else {
-    pptContainer.classList.remove('hidden');
-  }
-});
-</script>
+<script src="script.js"></script>
 </body>
 </html>
