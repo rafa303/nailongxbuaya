@@ -1,37 +1,32 @@
 const video = document.getElementById('reelVideo');
 const videoContainer = document.getElementById('videoContainer');
-const rotateNotice = document.getElementById('rotateNotice');
 const pptContainer = document.getElementById('pptContainer');
-const pptSlide = document.getElementById('pptSlide');
+const rotateNotice = document.getElementById('rotateNotice');
+const musik = document.getElementById("musikLatar");
 
-let slideIndex = 1;
-const totalSlides = 5; // Ganti sesuai jumlah slide kamu
+// Play video saat halaman dibuka
 video.muted = false;
-video.play().catch(() => {}); // Biarkan silent autoplay jalan
+video.play().catch(() => {});
 
 video.addEventListener('ended', () => {
-  videoContainer.style.display = 'none';
+  // Fade out video
+  videoContainer.style.opacity = "0";
 
-  // Cek apakah di HP (layar kecil & portrait)
-  if (window.innerWidth < 600 && window.innerHeight > window.innerWidth) {
-    rotateNotice.classList.remove('hidden');
-    setTimeout(() => {
-      rotateNotice.classList.add('hidden');
-      pptContainer.classList.remove('hidden');
-    }, 3000); // kasih waktu 3 detik
-  } else {
-    pptContainer.classList.remove('hidden');
-  }
+  setTimeout(() => {
+    videoContainer.style.display = "none";
+
+    // Jika di HP potrait, tampilkan notice dulu
+    if (window.innerWidth < 600 && window.innerHeight > window.innerWidth) {
+      rotateNotice.classList.remove("hidden");
+
+      setTimeout(() => {
+        rotateNotice.classList.add("hidden");
+        pptContainer.classList.remove("hidden");
+        if (musik) musik.play().catch(() => {});
+      }, 3000);
+    } else {
+      pptContainer.classList.remove("hidden");
+      if (musik) musik.play().catch(() => {});
+    }
+  }, 1000);
 });
-
-function nextSlide() {
-  slideIndex++;
-  if (slideIndex > totalSlides) slideIndex = 1;
-  pptSlide.src = `slide${slideIndex}.png`;
-}
-
-function prevSlide() {
-  slideIndex--;
-  if (slideIndex < 1) slideIndex = totalSlides;
-  pptSlide.src = `slide${slideIndex}.png`;
-}
