@@ -17,7 +17,32 @@ body {
   justify-content: center;
   z-index: 99999;
   transition: opacity 0.8s ease;
+  flex-direction: column;
 }
+
+.loading-box {
+  text-align: center;
+}
+
+.loading-text {
+  color: white;
+  font-size: 28px;
+  font-family: 'Cinzel', serif;
+  animation: blink 1s infinite alternate;
+}
+
+.loading-desc {
+  margin-top: 10px;
+  color: #aaa;
+  font-size: 16px;
+  font-style: italic;
+}
+
+@keyframes blink {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
 
 .loading-text {
   color: white;
