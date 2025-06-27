@@ -1,4 +1,5 @@
 const video = document.getElementById('reelVideo');
+const loadingScreen = document.getElementById("loadingScreen");
 const videoContainer = document.getElementById('videoContainer');
 const pptContainer = document.getElementById('pptContainer');
 const rotateNotice = document.getElementById('rotateNotice');
