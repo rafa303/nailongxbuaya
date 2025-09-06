@@ -41,28 +41,19 @@ function tryLoadBackground(list) {
 function applyBackground() {
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
   const mobileCandidates = [
-    "phone-bg.png",
     "phone-bg.jpg",
-    "bg-mobile.png",
     "bg-mobile.jpg",
-    "bg-mobile.PNG",
-    "phone-bg.PNG"
   ];
   const desktopCandidates = [
-    "laptop-bg.png",
-    "laptop-bg.jpg",
     "bg-dekstop.png", // try common typo the project used
     "bg-desktop.png",
-    "bg-desktop.jpg",
-    "bg-laptop.png",
-    "bg-laptop.jpg"
   ];
   tryLoadBackground(isMobile ? mobileCandidates : desktopCandidates);
 }
 
 function clearBackground() {
   document.body.style.backgroundImage = "";
-  document.body.style.backgroundColor = "black";
+  document.body.style.backgroundColor = "white";
 }
 
 // Page switching
