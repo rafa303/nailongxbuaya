@@ -1,6 +1,6 @@
 // Secret values
-const SECRET_CONFESS_DATE = "2023-05-01";
-const SECRET_RELATION_DATE = "2023-06-01";
+const SECRET_CONFESS_DATE = "1";
+const SECRET_RELATION_DATE = "1";
 const SECRET_NAME = "Nailong";
 
 // Pages
@@ -50,13 +50,19 @@ document.getElementById("unlock-btn").addEventListener("click", () => {
   const cDate = document.getElementById("confess-date").value.trim();
   const rDate = document.getElementById("relation-date").value.trim();
   const name = document.getElementById("partner-name").value.trim();
+
   if (
     cDate === SECRET_CONFESS_DATE &&
     rDate === SECRET_RELATION_DATE &&
     name.toLowerCase() === SECRET_NAME.toLowerCase()
   ) {
-    showPage("surat");
-    document.getElementById("bg-music").play().catch(() => {});
+    // Animasi pintu brankas
+    const door = document.getElementById("brankas-door");
+    door.classList.add("open");
+    setTimeout(() => {
+      showPage("surat");
+      document.getElementById("bg-music").play().catch(() => {});
+    }, 2000); // ⏳ tunggu animasi 2 detik
   } else {
     document.getElementById("error-msg").innerText =
       "Jawaban salah, coba lagi!";
@@ -77,3 +83,9 @@ document.getElementById("retry-btn").addEventListener("click", () => {
 document.getElementById("back-btn").addEventListener("click", () => {
   showPage("brankas");
 });
+// 🎮 Mobile Controls
+function moveLeft() { playerMove(-1); }
+function moveRight() { playerMove(1); }
+function rotate() { playerRotate(); }
+function drop() { playerDrop(); }
+
