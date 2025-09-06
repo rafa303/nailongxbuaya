@@ -206,9 +206,9 @@ function setBackground() {
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
   if (isMobile) {
-    document.body.style.backgroundImage = "url('phone-bg.jpg')";
+    document.body.style.backgroundImage = "url('bg-mobile.png')";
   } else {
-    document.body.style.backgroundImage = "url('laptop-bg.jpg')";
+    document.body.style.backgroundImage = "url('bg-dekstop.png')";
   }
 }
 
