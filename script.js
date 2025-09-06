@@ -14,9 +14,9 @@ const pages = {
 
 // Background handler
 function applyBackground() {
-  let bg = "bg-laptop.jpg";
+  let bg = "bg-dekstop.png";
   if (/Mobi|Android/i.test(navigator.userAgent)) {
-    bg = "bg-mobile.jpg";
+    bg = "bg-mobile.png";
   }
   document.body.style.backgroundImage = `url('${bg}')`;
   document.body.style.backgroundSize = "cover";
