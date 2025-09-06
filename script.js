@@ -47,7 +47,7 @@ const scoreEl = document.getElementById('score');
 // Apply background depending on device
 function applyBackgrounds(){
   const isMobile = window.innerWidth <= 720;
-  const img = isMobile ? 'assets/phone-bg.jpg' : 'assets/laptop-bg.jpg';
+  const img = isMobile ? 'phone-bg.jpg' : 'laptop-bg.jpg';
   // apply to vault panel and letter card pseudo via inline styles
   const beforeStyle = `url('${img}')`;
   // Use CSS variable via style property on pseudo not possible; so set background on elements directly
