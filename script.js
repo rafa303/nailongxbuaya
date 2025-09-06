@@ -1,7 +1,7 @@
 // Secret values
-const SECRET_CONFESS_DATE = "1";
-const SECRET_RELATION_DATE = "1";
-const SECRET_NAME = "Nailong";
+const SECRET_CONFESS_DATE = "26/06/2025";
+const SECRET_RELATION_DATE = "09/08/2025";
+const SECRET_NAME = "Rafa";
 
 // Pages
 const pages = {
@@ -23,13 +23,25 @@ function applyBackground() {
   document.body.style.backgroundAttachment = "fixed";
 }
 
+function clearBackground() {
+  document.body.style.backgroundImage = "";
+  document.body.style.backgroundColor = "white";
+}
+
+// Panggil applyBackground() di awal skrip agar loading screen juga memiliki latar belakang
+applyBackground();
+
 // Page switching
 function showPage(page) {
   for (let key in pages) pages[key].classList.remove("active");
   pages[page].classList.add("active");
 
-  // Panggil applyBackground() di setiap perpindahan halaman
-  applyBackground();
+  if (page === "brankas" || page === "surat") {
+    applyBackground();
+  } else {
+    // Pada halaman game dan end, latar belakang akan dihilangkan
+    clearBackground();
+  }
 }
 
 // initial flow: loading -> brankas
