@@ -12,7 +12,7 @@ const pages = {
   end: document.getElementById("end-page"),
 };
 
-// ---------------- Background loader (robust) ----------------
+// ---------------- Background loader ----------------
 function applyBackground() {
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
   const src = isMobile ? "bg-mobile.png" : "bg-dekstop.png";
@@ -23,23 +23,13 @@ function applyBackground() {
   document.body.style.backgroundAttachment = "fixed";
 }
 
-applyBackground();
-
-function clearBackground() {
-  document.body.style.backgroundImage = "";
-  document.body.style.backgroundColor = "white";
-}
-
 // Page switching
 function showPage(page) {
   for (let key in pages) pages[key].classList.remove("active");
   pages[page].classList.add("active");
 
-  if (page === "brankas" || page === "surat") {
-    applyBackground();
-  } else {
-    clearBackground();
-  }
+  // Panggil applyBackground() di setiap perpindahan halaman
+  applyBackground();
 }
 
 // initial flow: loading -> brankas
