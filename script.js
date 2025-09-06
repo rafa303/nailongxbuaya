@@ -13,35 +13,17 @@ const pages = {
 };
 
 // ---------------- Background loader (robust) ----------------
-function tryLoadBackground(list) {
-  let i = 0;
-  function tryNext() {
-    if (i >= list.length) {
-      // nothing found -> clear background
-      document.body.style.backgroundImage = "";
-      return;
-    }
-    const src = list[i];
-    const img = new Image();
-    img.onload = () => {
-      document.body.style.backgroundImage = `url('${src}')`;
-      document.body.style.backgroundSize = "cover";
-      document.body.style.backgroundPosition = "center";
-      document.body.style.backgroundAttachment = "fixed";
-    };
-    img.onerror = () => {
-      i++;
-      tryNext();
-    };
-    img.src = src;
-  }
-  tryNext();
-}
-
 function applyBackground() {
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  tryLoadBackground(isMobile ? "bg-mobile.png" : "bg-dekstop.png");
+  const src = isMobile ? "bg-mobile.png" : "bg-dekstop.png";
+
+  document.body.style.backgroundImage = `url('${src}')`;
+  document.body.style.backgroundSize = "cover";
+  document.body.style.backgroundPosition = "center";
+  document.body.style.backgroundAttachment = "fixed";
 }
+
+applyBackground();
 
 function clearBackground() {
   document.body.style.backgroundImage = "";
