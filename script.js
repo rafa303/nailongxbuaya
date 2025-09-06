@@ -23,11 +23,6 @@ function applyBackground() {
   document.body.style.backgroundAttachment = "fixed";
 }
 
-function clearBackground() {
-  document.body.style.backgroundImage = "";
-  document.body.style.backgroundColor = "white";
-}
-
 // Panggil applyBackground() di awal skrip agar loading screen juga memiliki latar belakang
 applyBackground();
 
@@ -40,7 +35,6 @@ function showPage(page) {
     applyBackground();
   } else {
     // Pada halaman game dan end, latar belakang akan dihilangkan
-    clearBackground();
   }
 }
 
