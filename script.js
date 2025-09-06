@@ -12,24 +12,60 @@ const pages = {
   end: document.getElementById("end-page"),
 };
 
-// Background handler
-function applyBackground() {
-  let bg = "bg-dekstop.png";
-  if (/Mobi|Android/i.test(navigator.userAgent)) {
-    bg = "bg-mobile.png";
+// ---------------- Background loader (robust) ----------------
+function tryLoadBackground(list) {
+  let i = 0;
+  function tryNext() {
+    if (i >= list.length) {
+      // nothing found -> clear background
+      document.body.style.backgroundImage = "";
+      return;
+    }
+    const src = list[i];
+    const img = new Image();
+    img.onload = () => {
+      document.body.style.backgroundImage = `url('${src}')`;
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.backgroundAttachment = "fixed";
+    };
+    img.onerror = () => {
+      i++;
+      tryNext();
+    };
+    img.src = src;
   }
-  document.body.style.backgroundImage = `url('${bg}')`;
-  document.body.style.backgroundSize = "cover";
-  document.body.style.backgroundPosition = "center";
-  document.body.style.backgroundAttachment = "fixed";
+  tryNext();
+}
+
+function applyBackground() {
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+  const mobileCandidates = [
+    "phone-bg.png",
+    "phone-bg.jpg",
+    "bg-mobile.png",
+    "bg-mobile.jpg",
+    "bg-mobile.PNG",
+    "phone-bg.PNG"
+  ];
+  const desktopCandidates = [
+    "laptop-bg.png",
+    "laptop-bg.jpg",
+    "bg-dekstop.png", // try common typo the project used
+    "bg-desktop.png",
+    "bg-desktop.jpg",
+    "bg-laptop.png",
+    "bg-laptop.jpg"
+  ];
+  tryLoadBackground(isMobile ? mobileCandidates : desktopCandidates);
 }
 
 function clearBackground() {
-  document.body.style.backgroundImage = "none";
+  document.body.style.backgroundImage = "";
   document.body.style.backgroundColor = "black";
 }
 
-// Page switcher
+// Page switching
 function showPage(page) {
   for (let key in pages) pages[key].classList.remove("active");
   pages[page].classList.add("active");
@@ -41,12 +77,12 @@ function showPage(page) {
   }
 }
 
-// Loading screen -> Brankas
+// initial flow: loading -> brankas
 setTimeout(() => {
   showPage("brankas");
 }, 2000);
 
-// Unlock button
+// ---------------- Vault unlock ----------------
 document.getElementById("unlock-btn").addEventListener("click", () => {
   const cDate = document.getElementById("confess-date").value.trim();
   const rDate = document.getElementById("relation-date").value.trim();
@@ -57,26 +93,27 @@ document.getElementById("unlock-btn").addEventListener("click", () => {
     rDate === SECRET_RELATION_DATE &&
     name.toLowerCase() === SECRET_NAME.toLowerCase()
   ) {
-    // Animasi pintu brankas
+    // Animasi pintu brankas (CSS .open)
     const door = document.getElementById("brankas-door");
     door.classList.add("open");
     setTimeout(() => {
       showPage("surat");
-      document.getElementById("bg-music").play().catch(() => {});
-    }, 2000); // tunggu animasi 2 detik
+      // try play audio (may require user gesture on some browsers)
+      const bgAudio = document.getElementById("bg-music");
+      if (bgAudio) bgAudio.play().catch(()=>{});
+    }, 1400); // singkat saja; sesuaikan animasi CSS jika perlu
   } else {
-    document.getElementById("error-msg").innerText =
-      "Jawaban salah, coba lagi!";
+    document.getElementById("error-msg").innerText = "Jawaban salah, coba lagi!";
   }
 });
 
-// Play game button
+// go to game from surat
 document.getElementById("play-game-btn").addEventListener("click", () => {
   showPage("game");
   startGame();
 });
 
-// Retry & Back buttons
+// Retry & Back buttons on End page
 document.getElementById("retry-btn").addEventListener("click", () => {
   showPage("game");
   startGame();
@@ -85,8 +122,7 @@ document.getElementById("back-btn").addEventListener("click", () => {
   showPage("brankas");
 });
 
-// ======== TETRIS GAME SCRIPT ========
-
+// ---------------- TETRIS GAME SCRIPT ----------------
 const canvas = document.getElementById("tetris");
 const context = canvas.getContext("2d");
 context.scale(20, 20);
@@ -94,9 +130,7 @@ context.scale(20, 20);
 // Arena
 function createMatrix(w, h) {
   const matrix = [];
-  while (h--) {
-    matrix.push(new Array(w).fill(0));
-  }
+  while (h--) matrix.push(new Array(w).fill(0));
   return matrix;
 }
 const arena = createMatrix(12, 20);
@@ -111,23 +145,19 @@ function createPiece(type) {
   if (type === "S") return [[0,6,6],[6,6,0],[0,0,0]];
   if (type === "Z") return [[7,7,0],[0,7,7],[0,0,0]];
 }
+
 const colors = [null,"#FF0D72","#0DC2FF","#0DFF72","#F538FF","#FF8E0D","#FFE138","#3877FF"];
 
 // Player
-const player = {
-  pos: { x: 0, y: 0 },
-  matrix: null,
-  score: 0,
-};
+const player = { pos:{x:0,y:0}, matrix:null, score:0 };
 
-// Collision check
+// Collision
 function collide(arena, player) {
   const m = player.matrix;
   const o = player.pos;
-  for (let y = 0; y < m.length; ++y) {
-    for (let x = 0; x < m[y].length; ++x) {
-      if (m[y][x] !== 0 &&
-        (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0) {
+  for (let y=0;y<m.length;y++){
+    for (let x=0;x<m[y].length;x++){
+      if (m[y][x] !== 0 && (arena[y+o.y] && arena[y+o.y][x+o.x]) !== 0) {
         return true;
       }
     }
@@ -137,8 +167,8 @@ function collide(arena, player) {
 
 // Merge
 function merge(arena, player) {
-  player.matrix.forEach((row,y) => {
-    row.forEach((value,x) => {
+  player.matrix.forEach((row,y)=>{
+    row.forEach((value,x)=>{
       if (value !== 0) {
         arena[y + player.pos.y][x + player.pos.x] = value;
       }
@@ -146,7 +176,7 @@ function merge(arena, player) {
   });
 }
 
-// Sweep lines
+// Sweep
 function arenaSweep() {
   let rowCount = 1;
   outer: for (let y = arena.length - 1; y >= 0; --y) {
@@ -161,11 +191,11 @@ function arenaSweep() {
   }
 }
 
-// Draw
+// Draw helpers
 function drawMatrix(matrix, offset) {
-  matrix.forEach((row,y) => {
-    row.forEach((value,x) => {
-      if (value !== 0) {
+  matrix.forEach((row,y)=>{
+    row.forEach((value,x)=>{
+      if (value !== 0){
         context.fillStyle = colors[value];
         context.fillRect(x + offset.x, y + offset.y, 1, 1);
       }
@@ -175,110 +205,117 @@ function drawMatrix(matrix, offset) {
 function draw() {
   context.fillStyle = "#000";
   context.fillRect(0,0,canvas.width,canvas.height);
-  drawMatrix(arena,{x:0,y:0});
-  drawMatrix(player.matrix,player.pos);
+  drawMatrix(arena, {x:0,y:0});
+  if (player.matrix) drawMatrix(player.matrix, player.pos);
 }
 
 // Drop
-function playerDrop() {
+function playerDrop(){
   player.pos.y++;
   if (collide(arena, player)) {
     player.pos.y--;
     merge(arena, player);
-    playerReset();
     arenaSweep();
     updateScore();
+    playerReset();
   }
   dropCounter = 0;
 }
 
 // Move
-function playerMove(dir) {
+function playerMove(dir){
   player.pos.x += dir;
-  if (collide(arena, player)) {
-    player.pos.x -= dir;
-  }
+  if (collide(arena, player)) player.pos.x -= dir;
 }
 
-// Rotate
-function rotate(matrix, dir) {
-  for (let y=0;y<matrix.length;++y){
-    for (let x=0;x<y;++x){
-      [matrix[x][y],matrix[y][x]]=[matrix[y][x],matrix[x][y]];
+// ---- rename matrix-rotation to avoid name collision with UI rotate() ----
+function rotateMatrix(matrix, dir) {
+  for (let y = 0; y < matrix.length; ++y) {
+    for (let x = 0; x < y; ++x) {
+      [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
     }
   }
-  if (dir > 0) matrix.forEach(row=>row.reverse());
+  if (dir > 0) matrix.forEach(row => row.reverse());
   else matrix.reverse();
 }
-function playerRotate(dir) {
+
+function playerRotate(dir){
   const pos = player.pos.x;
   let offset = 1;
-  rotate(player.matrix, dir);
-  while (collide(arena, player)) {
+  rotateMatrix(player.matrix, dir);
+  while (collide(arena, player)){
     player.pos.x += offset;
     offset = -(offset + (offset>0?1:-1));
-    if (offset > player.matrix[0].length) {
-      rotate(player.matrix, -dir);
+    if (offset > player.matrix[0].length){
+      rotateMatrix(player.matrix, -dir);
       player.pos.x = pos;
       return;
     }
   }
 }
 
-// Reset
-function playerReset() {
+// Reset (spawn)
+function playerReset(){
   const pieces = "TJLOSZI";
-  player.matrix = createPiece(pieces[(pieces.length*Math.random())|0]);
+  player.matrix = createPiece(pieces[(pieces.length * Math.random()) | 0]);
   player.pos.y = 0;
-  player.pos.x = ((arena[0].length/2)|0) - ((player.matrix[0].length/2)|0);
-  if (collide(arena, player)) {
+  player.pos.x = ((arena[0].length / 2) | 0) - ((player.matrix[0].length / 2) | 0);
+
+  if (collide(arena, player)){
     // GAME OVER
-    arena.forEach(row=>row.fill(0));
     document.getElementById("final-score").innerText = player.score;
     showPage("end");
+    // clear arena for next start
+    for (let y=0;y<arena.length;y++) arena[y].fill(0);
     return;
   }
 }
 
 // Score
-function updateScore() {
+function updateScore(){
   document.getElementById("score").innerText = player.score;
 }
 
-// Loop
+// Game loop variables
 let dropCounter = 0;
 let dropInterval = 1000;
 let lastTime = 0;
-function update(time=0) {
+
+function update(time = 0){
   const deltaTime = time - lastTime;
   lastTime = time;
   dropCounter += deltaTime;
-  if (dropCounter > dropInterval) {
-    playerDrop();
-  }
+  if (dropCounter > dropInterval) playerDrop();
   draw();
+  // only continue loop if on game page
+  if (pages.game.classList.contains("active")) requestAnimationFrame(update);
+}
+
+// Start
+function startGame(){
+  // reset arena & score
+  for (let y=0;y<arena.length;y++) arena[y].fill(0);
+  player.score = 0;
+  updateScore();
+  dropCounter = 0;
+  lastTime = 0;
+  playerReset();
+  // kick off loop
   requestAnimationFrame(update);
 }
 
-// Start game
-function startGame() {
-  player.score = 0;
-  updateScore();
-  playerReset();
-  update();
-}
-
-// Keyboard
-document.addEventListener("keydown", event => {
-  if (event.keyCode === 37) playerMove(-1);
-  else if (event.keyCode === 39) playerMove(1);
-  else if (event.keyCode === 40) playerDrop();
-  else if (event.keyCode === 81) playerRotate(-1);
-  else if (event.keyCode === 87) playerRotate(1);
+// Keyboard controls
+document.addEventListener("keydown", event=>{
+  if (!pages.game.classList.contains("active")) return;
+  if (event.key === "ArrowLeft") playerMove(-1);
+  else if (event.key === "ArrowRight") playerMove(1);
+  else if (event.key === "ArrowDown") playerDrop();
+  else if (event.key === "q" || event.key === "Q") playerRotate(-1);
+  else if (event.key === "w" || event.key === "W" || event.key === "ArrowUp") playerRotate(1);
 });
 
-// Mobile controls
-function moveLeft(){playerMove(-1);}
-function moveRight(){playerMove(1);}
-function rotate(){playerRotate(1);}
-function drop(){playerDrop();}
+// Mobile control wrappers (ke HTML onclick)
+function moveLeft(){ playerMove(-1); }
+function moveRight(){ playerMove(1); }
+function rotate(){ playerRotate(1); } // rotate UI calls this
+function drop(){ playerDrop(); }
