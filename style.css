@@ -13,6 +13,9 @@ body {
   padding: 40px;
   position: relative;
   overflow-x: hidden;
+
+  /* ✨ Transisi halus */
+  transition: background-image 0.8s ease-in-out, background-color 0.8s ease-in-out;
 }
 
 /* Blur Overlay */
@@ -24,18 +27,8 @@ body::before {
   z-index: -1;
 }
 
-/* Background otomatis (JS akan ganti phone-bg / laptop-bg) */
-body {
-  transition: background-image 0.8s ease-in-out;
-}
-
-.page {
-  display: none;
-  padding: 20px;
-}
-.page.active {
-  display: block;
-}
+.page { display: none; padding: 20px; }
+.page.active { display: block; }
 
 /* ------------------ TIPOGRAFI ------------------ */
 h1, h2, h3 {
@@ -54,10 +47,7 @@ h1, h2, h3 {
 }
 
 /* ------------------ FORM ------------------ */
-.container {
-  max-width: 600px;
-  margin: auto;
-}
+.container { max-width: 600px; margin: auto; }
 
 input {
   display: block;
@@ -71,12 +61,7 @@ input {
   width: 80%;
   transition: box-shadow 0.3s, transform 0.2s;
 }
-
-input::placeholder {
-  color: #ccc;
-  font-style: italic;
-}
-
+input::placeholder { color: #ccc; font-style: italic; }
 input:focus {
   box-shadow: 0 0 8px #d4a373;
   transform: scale(1.02);
@@ -94,16 +79,11 @@ button {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
-
 button:hover {
   background-color: #a0744e;
   transform: scale(1.05);
 }
-
-.error {
-  color: #ff6b6b;
-  margin-top: 10px;
-}
+.error { color: #ff6b6b; margin-top: 10px; }
 
 /* ------------------ BRANKAS ------------------ */
 #brankas-door {
@@ -118,9 +98,7 @@ button:hover {
   transform: rotateY(0deg);
   transition: transform 2s ease;
 }
-#brankas-door.open {
-  transform: rotateY(120deg);
-}
+#brankas-door.open { transform: rotateY(120deg); }
 
 /* ------------------ SURAT ------------------ */
 .surat {
@@ -144,12 +122,7 @@ button:hover {
   text-align: center;
   color: #333;
 }
-.isi-surat {
-  font-size: 18px;
-  line-height: 1.8;
-  text-align: justify;
-  text-indent: 25px;
-}
+.isi-surat { font-size: 18px; line-height: 1.8; text-align: justify; text-indent: 25px; }
 .penutup {
   font-style: italic;
   text-align: center;
@@ -159,11 +132,7 @@ button:hover {
 }
 
 /* ------------------ TETRIS ------------------ */
-canvas {
-  background: black;
-  display: block;
-  margin: auto;
-}
+canvas { background: black; display: block; margin: auto; }
 #tetris-controls {
   display: flex;
   justify-content: center;
@@ -189,29 +158,4 @@ canvas {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.fade-in {
-  animation: fadeIn 0.8s ease-out;
-}
-body {
-  margin: 0;
-  padding: 0;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-
-  /* ✨ Transisi halus untuk background */
-  transition: background-image 0.8s ease-in-out, background-color 0.8s ease-in-out;
-}
-function setBackground() {
-  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-
-  if (isMobile) {
-    document.body.style.backgroundImage = "url('bg-mobile.png')";
-  } else {
-    document.body.style.backgroundImage = "url('bg-dekstop.png')";
-  }
-}
-
-// Jalankan pas awal
-setBackground();
-
+.fade-in { animation: fadeIn 0.8s ease-out; }
