@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Romantic Tetris Site</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="page active">
+    <img src="dummy-loading.png" alt="Loading" class="loading-img" />
+    <p>Sabar ya nailongkuuu...</p>
+  </div>
+
+  <!-- Brankas Page -->
+  <div id="brankas-page" class="page">
+    <h1>Masukkan Kode Cinta</h1>
+    <p>Tanggal pertama confess, tanggal jadian, dan siapa pacarnya?</p>
+    <input type="text" id="confess-date" placeholder="Contoh: 2023-05-01" />
+    <input type="text" id="relation-date" placeholder="Contoh: 2023-06-01" />
+    <input type="text" id="partner-name" placeholder="Nama pacar" />
+    <button id="unlock-btn">Buka Brankas</button>
+    <p id="error-msg" class="error"></p>
+  </div>
+
+  <!-- Surat Page -->
+  <div id="surat-page" class="page">
+    <h2>Untuk Kamu</h2>
+    <p class="letter">
+      Ini adalah surat dummy. Isinya bisa kamu ganti nanti.<br/>
+      Dari: Aku<br/>
+      Untuk: Kamu
+    </p>
+    <button id="play-game-btn">Mainkan Game</button>
+    <audio id="bg-music" src="dummy-audio.mp3" loop></audio>
+  </div>
+
+  <!-- Game Page -->
+  <div id="game-page" class="page">
+    <h2>Tetris Classic</h2>
+    <canvas id="tetris" width="240" height="400"></canvas>
+    <p>Score: <span id="score">0</span></p>
+  </div>
+
+  <!-- End Score Page -->
+  <div id="end-page" class="page">
+    <h2>Game Over</h2>
+    <p>Skor kamu: <span id="final-score"></span></p>
+    <button id="retry-btn">Ulangi</button>
+    <button id="back-btn">Kembali ke Brankas</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
