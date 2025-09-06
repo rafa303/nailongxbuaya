@@ -41,12 +41,10 @@ function tryLoadBackground(list) {
 function applyBackground() {
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
   const mobileCandidates = [
-    "phone-bg.jpg",
-    "bg-mobile.jpg",
+    "bg-mobile.png",
   ];
   const desktopCandidates = [
     "bg-dekstop.png", // try common typo the project used
-    "bg-desktop.png",
   ];
   tryLoadBackground(isMobile ? mobileCandidates : desktopCandidates);
 }
