@@ -15,6 +15,7 @@
 
   <!-- Brankas Page -->
   <div id="brankas-page" class="page">
+    <div id="brankas-door"></div>
     <h1>Masukkan Kode Cinta</h1>
     <p>Tanggal pertama confess, tanggal jadian, dan siapa pacarnya?</p>
     <input type="text" id="confess-date" placeholder="Contoh: 2023-05-01" />
@@ -40,6 +41,12 @@
   <div id="game-page" class="page">
     <h2>Tetris Classic</h2>
     <canvas id="tetris" width="240" height="400"></canvas>
+    <div id="tetris-controls">
+  <button onclick="moveLeft()">⬅️</button>
+  <button onclick="rotate()">🔄</button>
+  <button onclick="moveRight()">➡️</button>
+  <button onclick="drop()">⬇️</button>
+</div>
     <p>Score: <span id="score">0</span></p>
   </div>
 
